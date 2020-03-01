@@ -17,6 +17,8 @@ namespace NetworkReplacer
         }
 
         //select network one then type in new network in search field?
-        //right click on upgrade road tool, turns red select new road.. 
+        //right click on upgrade road tool, turns red select new road..
+        
+        //upgrade to railway with one click?
     }
 }

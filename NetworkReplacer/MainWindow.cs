@@ -11,6 +11,7 @@ namespace NetworkReplacer
 
         private static NetReplacePanel _instance;
         private UIButton getIdsButton;
+        private UIButton replaceRoad;
 
         public static NetReplacePanel instance
         {
@@ -46,9 +47,9 @@ namespace NetworkReplacer
             label.text = "Loaded!";
             label.autoSize = false;
             label.width = 240;
-            label.height = 80;
+            label.height = 240;
             //label.autoHeight = true;
-            label.relativePosition = new Vector2(20, 55);
+            label.relativePosition = new Vector2(475, 597);
             label.wordWrap = true;
             label.textAlignment = UIHorizontalAlignment.Center;
 
@@ -64,6 +65,21 @@ namespace NetworkReplacer
                 {
                     Debug.Log("Button Pressed!");
                     Debug.Log(Tools.GetNetSegmentIds("Basic Road"));
+                }
+            };
+
+            replaceRoad = UIUtils.CreateButton(this);
+            replaceRoad.text = "ReplaceRoad";
+            replaceRoad.relativePosition = new Vector2(20, 130);
+            replaceRoad.width = 150;
+
+
+            replaceRoad.eventClick += (c, p) =>
+            {
+                if (isVisible)
+                {
+                    Debug.Log("ReplaceRoads Pressed!");
+                    Tools.UpgradeNetSegments("Basic Road");
                 }
             };
 
