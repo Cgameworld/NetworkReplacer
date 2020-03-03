@@ -13,7 +13,7 @@ namespace NetworkReplacer
 
         public static void UpgradeNetSegments(string netInfoSegmentName)
         {
-            //from Road Removal Tool
+            //from Road Removal Tool by egi
             var replacementNetInfo = PrefabCollection<NetInfo>.FindLoaded("Large Road");
             var netSegmentIds = GetNetSegmentIds(netInfoSegmentName);
             var randomizer = new Randomizer();
@@ -45,7 +45,6 @@ namespace NetworkReplacer
 
         public static List<ushort> GetNetSegmentIds(string netInfoSegmentName)
         {
-            Debug.Log("e " + netInfoSegmentName);
             var result = new List<ushort>();
             var bufferLength = (ushort)NetManager.instance.m_segments.m_buffer.Length;
             for (ushort i = 0; i < bufferLength; i++)
@@ -58,7 +57,7 @@ namespace NetworkReplacer
 
                 if (segment.Info.name == netInfoSegmentName)
                 {
-                    Debug.Log("seg" + i);
+                    Debug.Log("rseg" + i);
                     result.Add(i);
                 }
             }

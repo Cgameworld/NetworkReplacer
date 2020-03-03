@@ -55,6 +55,7 @@ namespace NetworkReplacer
                 if (isModal && isVisible)
                     UIView.PopModal();
                 parent.Hide();
+               
             };
 
             m_drag = AddUIComponent<UIDragHandle>();

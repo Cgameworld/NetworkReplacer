@@ -26,7 +26,6 @@ namespace NetworkReplacer
 
             return button;
         }
-
         public static UICheckBox CreateCheckBox(UIComponent parent)
         {
             UICheckBox checkBox = (UICheckBox)parent.AddUIComponent<UICheckBox>();

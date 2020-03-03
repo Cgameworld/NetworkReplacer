@@ -8,22 +8,32 @@ using UnityEngine;
 namespace NetworkReplacer
 {
     public class ModThreading : ThreadingExtensionBase
-    {
-       
-        private bool _processed = false;
-        bool enabled = false;
+    {      
+        bool processed = false;
 
         public override void OnUpdate(float realTimeDelta, float simulationTimeDelta)
         {
-            if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && Input.GetKey(KeyCode.F5))
+            if (Input.GetKey(KeyCode.F5))
             {
-                Debug.Log("F5 Pressed (CGW Netreplacer");
-                NetReplacePanel.instance.Show();
+                if (processed == false)
+                {
+                    
+                    Debug.Log("F5 Pressed (CGW Netreplacer");
+                    if (NetReplacePanel.instance.isVisible == false)
+                    {
+                        NetReplacePanel.instance.Show();
+                    }
+                    else
+                    {
+                        NetReplacePanel.instance.Hide();
+                    } 
+                    processed = true;
+                    Debug.Log("is visible? " + NetReplacePanel.instance.isVisible);
+                }
             }
             else
             {
-                // not both keys pressed: Reset processed state
-                _processed = false;
+                processed = false;
             }
         }
 
