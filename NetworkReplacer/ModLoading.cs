@@ -24,6 +24,8 @@ namespace NetworkReplacer
 
         //note that too many presses might lead to bad results use with caution
         //might hit segment limit check with other mod,
-        //back up saves before using! as with any other mod
+        //back up saves before using this mod! as with any other mod
+
+        
     }
 }

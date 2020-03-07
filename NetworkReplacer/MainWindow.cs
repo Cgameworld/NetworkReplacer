@@ -68,7 +68,7 @@ namespace NetworkReplacer
 
             removeFromFieldButton = UIUtils.CreateButton(this);
             removeFromFieldButton.text = "Reset";
-            removeFromFieldButton.relativePosition = new Vector2(180, 150);
+            removeFromFieldButton.relativePosition = new Vector2(210, 150);
             removeFromFieldButton.width = 150;
 
 
@@ -85,7 +85,7 @@ namespace NetworkReplacer
 
             getIdsButton = UIUtils.CreateButton(this);
             getIdsButton.text = "getIDs";
-            getIdsButton.relativePosition = new Vector2(340, 150);
+            getIdsButton.relativePosition = new Vector2(370, 150);
             getIdsButton.width = 70;
 
 
@@ -101,14 +101,15 @@ namespace NetworkReplacer
             replaceRoad = UIUtils.CreateButton(this);
             replaceRoad.text = "Replace Network";
             replaceRoad.relativePosition = new Vector2(20, 150);
-            replaceRoad.width = 150;
+            replaceRoad.width = 180;
 
 
             replaceRoad.eventClick += (c, p) =>
             {
                 if (isVisible)
                 {
-                    Tools.UpgradeNetSegments("Basic Road");
+                    Debug.Log(fromRoadLabel.text + "  " + toRoadLabel.text);
+                    Tools.UpgradeNetSegments(fromRoadLabel.text,toRoadLabel.text);
                 }
             };
 
@@ -153,7 +154,7 @@ namespace NetworkReplacer
                     if (GameObject.FindObjectOfType<NetTool>().m_prefab == null)
                     {
                         fromRoadLabel.textColor = new Color32(255, 0, 0, 255);
-                        fromRoadLabel.text = "Select road from roads panel!";
+                        fromRoadLabel.text = "Select from vanilla roads panel!";
                     }
                     else
                     {
@@ -215,7 +216,7 @@ namespace NetworkReplacer
                     if (GameObject.FindObjectOfType<NetTool>().m_prefab == null)
                     {
                         toRoadLabel.textColor = new Color32(255, 0, 0, 255);
-                        toRoadLabel.text = "Select road from roads panel!";
+                        toRoadLabel.text = "Select from vanilla roads panel!";
                     }
                     else
                     {
