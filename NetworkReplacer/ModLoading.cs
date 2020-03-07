@@ -16,6 +16,8 @@ namespace NetworkReplacer
             Debug.Log("CGW Net replacer loaded!");
         }
 
+        //maybe add apply only in tile..
+
         //select network one then type in new network in search field?
         //right click on upgrade road tool, turns red select new road..
         
@@ -25,6 +27,15 @@ namespace NetworkReplacer
         //note that too many presses might lead to bad results use with caution
         //might hit segment limit check with other mod,
         //back up saves before using this mod! as with any other mod
+
+        //use cases
+
+        //warning regen takes a while!!!!!! new vechicles need to spawn
+
+
+        //replace all 3L highway with 2L outisde of map more realistic!
+        //replace all rails with railway
+
 
         
     }

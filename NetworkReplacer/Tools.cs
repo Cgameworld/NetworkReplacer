@@ -13,43 +13,36 @@ namespace NetworkReplacer
 
         public static void UpgradeNetSegments(string fromNetInfoSegmentName, string toNetInfoSegmentName)
         {
-            
-
-            if (NetManager.instance.m_segmentCount > 1) //if statement not really working
+            //from Road Removal Tool by egi
+            var replacementNetInfo = PrefabCollection<NetInfo>.FindLoaded(toNetInfoSegmentName);
+            var netSegmentIds = GetNetSegmentIds(fromNetInfoSegmentName);
+            var randomizer = new Randomizer();
+            foreach (var netSegmentId in netSegmentIds)
             {
-                //from Road Removal Tool by egi
-                var replacementNetInfo = PrefabCollection<NetInfo>.FindLoaded(toNetInfoSegmentName);
-                var netSegmentIds = GetNetSegmentIds(fromNetInfoSegmentName);
-                var randomizer = new Randomizer();
-                foreach (var netSegmentId in netSegmentIds)
-                {
-                    var segment = NetManager.instance.m_segments.m_buffer[netSegmentId];
-                    segment.Info.m_netAI.ManualDeactivation(netSegmentId, ref segment);
-                    var direction = segment.GetDirection(netSegmentId);
+                var segment = NetManager.instance.m_segments.m_buffer[netSegmentId];
+                segment.Info.m_netAI.ManualDeactivation(netSegmentId, ref segment);
+                var direction = segment.GetDirection(netSegmentId);
 
-                    //create a new segment over the old segment
-                    NetManager.instance.CreateSegment(
-                        out ushort newSegmentId,
-                        ref randomizer,
-                        replacementNetInfo,
-                        segment.m_startNode,
-                        segment.m_endNode,
-                        segment.m_startDirection,
-                        segment.m_endDirection,
-                        segment.m_buildIndex,
-                        Singleton<SimulationManager>.instance.m_currentBuildIndex,
-                        (segment.m_flags & NetSegment.Flags.Invert) != NetSegment.Flags.None
-                    );
+                //create a new segment over the old segment
+                NetManager.instance.CreateSegment(
+                    out ushort newSegmentId,
+                    ref randomizer,
+                    replacementNetInfo,
+                    segment.m_startNode,
+                    segment.m_endNode,
+                    segment.m_startDirection,
+                    segment.m_endDirection,
+                    segment.m_buildIndex,
+                    Singleton<SimulationManager>.instance.m_currentBuildIndex,
+                    (segment.m_flags & NetSegment.Flags.Invert) != NetSegment.Flags.None
+                );
 
-                    //demolish the old segment
-                    segment.Info.m_netAI.ManualDeactivation(netSegmentId, ref segment);
-                    NetManager.instance.ReleaseSegment(netSegmentId, false);
-                }
+                //demolish the old segment
+                segment.Info.m_netAI.ManualDeactivation(netSegmentId, ref segment);
+                NetManager.instance.ReleaseSegment(netSegmentId, false);
+                NetManager.instance.UpdateSegmentRenderer(netSegmentId, true);
             }
-            else
-            {
-                Debug.Log("Error! Dangerously low number of segments! Restart Game!");
-            }
+
             Debug.Log("a " + NetManager.instance.m_segmentCount.ToString());
             Debug.Log("b " + NetManager.instance.m_segments.ItemCount().ToString());
         }
