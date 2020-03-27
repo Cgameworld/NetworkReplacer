@@ -47,7 +47,7 @@ namespace NetworkReplacer
             clipChildren = true;
             width = 470;
             height = 200;
-            relativePosition = new Vector3(0, 55);
+            relativePosition = new Vector3(25, 700);
 
             // Title Bar
             m_title = AddUIComponent<UITitleBar>();

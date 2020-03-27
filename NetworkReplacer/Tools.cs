@@ -42,9 +42,6 @@ namespace NetworkReplacer
                 NetManager.instance.ReleaseSegment(netSegmentId, false);
                 NetManager.instance.UpdateSegmentRenderer(netSegmentId, true);
             }
-
-            Debug.Log("a " + NetManager.instance.m_segmentCount.ToString());
-            Debug.Log("b " + NetManager.instance.m_segments.ItemCount().ToString());
         }
 
 
