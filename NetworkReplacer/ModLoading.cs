@@ -2,6 +2,7 @@
 using ColossalFramework.Math;
 using ColossalFramework.UI;
 using ICities;
+using NetworkReplacer.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,12 @@ namespace NetworkReplacer
 {
     public class ModLoading : LoadingExtensionBase
     {
+        UIButton button;
+
         public override void OnLevelLoaded(LoadMode mode)
         {
             NetReplacePanel.instance.Show();
+            button = NetReplacerButton.CreateButton();
             Debug.Log("CGW Net replacer loaded!");
         }
 
