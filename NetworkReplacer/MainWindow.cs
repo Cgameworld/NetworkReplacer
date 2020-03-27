@@ -108,7 +108,7 @@ namespace NetworkReplacer
             {
                 if (isVisible)
                 {
-                    Debug.Log(fromRoadLabel.text + "  " + toRoadLabel.text);
+                    Debug.Log(fromRoadLabel.text + " |||| " + toRoadLabel.text);
                     Tools.UpgradeNetSegments(fromRoadLabel.text,toRoadLabel.text);
                 }
             };

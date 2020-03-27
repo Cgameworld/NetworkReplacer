@@ -52,6 +52,7 @@ namespace NetworkReplacer
         {
             var result = new List<ushort>();
             var bufferLength = (ushort)NetManager.instance.m_segments.m_buffer.Length;
+            int idCount = 0;
             for (ushort i = 0; i < bufferLength; i++)
             {
                 var segment = NetManager.instance.m_segments.m_buffer[i];
@@ -60,13 +61,15 @@ namespace NetworkReplacer
                     continue;
                 }
 
-                if (segment.Info.name == netInfoSegmentName)
+                if (segment.Info.name == netInfoSegmentName && (segment.m_endNode != 0 || segment.m_startNode != 0))
                 {
-                    //Debug.Log("rseg" + i);
                     result.Add(i);
+                    idCount++;
                 }
-            }
 
+
+            }
+            Debug.Log("Number of " + netInfoSegmentName + " : " + idCount);
             return result;
         }
     }
