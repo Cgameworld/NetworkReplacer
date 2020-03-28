@@ -23,6 +23,8 @@ namespace NetworkReplacer
         private UILabel toRoadLabel;
         private UIButton finalRoadAdd;
         private UIButton removeToFieldButton;
+        private UIButton clearAllButton;
+        private UIButton swapFromToButton;
 
         public static NetReplacePanel instance
         {
@@ -51,7 +53,7 @@ namespace NetworkReplacer
 
             // Title Bar
             m_title = AddUIComponent<UITitleBar>();
-            m_title.title = "Network Replacer";
+            m_title.title = "Bulk Network Replacer";
             //m_title.isModal = true;
 
             fromFieldRow = AddUIComponent<UIPanel>();
@@ -66,13 +68,45 @@ namespace NetworkReplacer
 
             toRowUI();
 
-            removeFromFieldButton = UIUtils.CreateButton(this);
-            removeFromFieldButton.text = "Reset";
-            removeFromFieldButton.relativePosition = new Vector2(210, 150);
-            removeFromFieldButton.width = 150;
+            replaceRoad = UIUtils.CreateButton(this);
+            replaceRoad.text = "Replace Network";
+            replaceRoad.relativePosition = new Vector2(20, 150);
+            replaceRoad.width = 200;
 
 
-            removeFromFieldButton.eventClick += (c, p) =>
+            replaceRoad.eventClick += (c, p) =>
+            {
+                if (isVisible)
+                {
+                    Tools.UpgradeNetSegments(fromRoadLabel.text,toRoadLabel.text);
+                }
+            };
+
+            swapFromToButton = UIUtils.CreateButton(this);
+            swapFromToButton.text = "Swap";
+            swapFromToButton.relativePosition = new Vector2(230, 150);
+            swapFromToButton.width = 90;
+
+
+            swapFromToButton.eventClick += (c, p) =>
+            {
+                if (isVisible)
+                {
+                    var fromtext = fromRoadLabel.text;
+                    var totext = toRoadLabel.text;
+                    fromRoadLabel.text = totext;
+                    toRoadLabel.text = fromtext;
+                    
+                }
+            };
+
+
+            clearAllButton = UIUtils.CreateButton(this);
+            clearAllButton.text = "Clear All";
+            clearAllButton.relativePosition = new Vector2(330, 150);
+            clearAllButton.width = 110;
+
+            clearAllButton.eventClick += (c, p) =>
             {
                 if (isVisible)
                 {
@@ -80,36 +114,9 @@ namespace NetworkReplacer
                     fromRoadLabel.isVisible = false;
                     finalRoadAdd.isVisible = true;
                     toRoadLabel.isVisible = false;
-                }
-            };
 
-            getIdsButton = UIUtils.CreateButton(this);
-            getIdsButton.text = "getIDs";
-            getIdsButton.relativePosition = new Vector2(370, 150);
-            getIdsButton.width = 70;
-
-
-            getIdsButton.eventClick += (c, p) =>
-            {
-                if (isVisible)
-                {
-                    Debug.Log("Button Pressed!");
-                    Debug.Log(Tools.GetNetSegmentIds("Basic Road"));
-                }
-            };
-
-            replaceRoad = UIUtils.CreateButton(this);
-            replaceRoad.text = "Replace Network";
-            replaceRoad.relativePosition = new Vector2(20, 150);
-            replaceRoad.width = 180;
-
-
-            replaceRoad.eventClick += (c, p) =>
-            {
-                if (isVisible)
-                {
-                    Debug.Log(fromRoadLabel.text + " |||| " + toRoadLabel.text);
-                    Tools.UpgradeNetSegments(fromRoadLabel.text,toRoadLabel.text);
+                    removeFromFieldButton.isVisible = false;
+                    removeToFieldButton.isVisible = false;
                 }
             };
 
@@ -151,6 +158,7 @@ namespace NetworkReplacer
                 {
                     initialRoadAdd.isVisible = false;
                     fromRoadLabel.isVisible = true;
+                    removeFromFieldButton.isVisible = true;
                     if (GameObject.FindObjectOfType<NetTool>().m_prefab == null)
                     {
                         fromRoadLabel.textColor = new Color32(255, 0, 0, 255);
@@ -170,12 +178,13 @@ namespace NetworkReplacer
             removeFromFieldButton.relativePosition = new Vector2(370, -5);
             removeFromFieldButton.height = 25;
             removeFromFieldButton.width = 80;
-            removeFromFieldButton.isVisible = true;
+            removeFromFieldButton.isVisible = false;
 
             removeFromFieldButton.eventClick += (c, p) =>
             {
                 initialRoadAdd.isVisible = true;
                 fromRoadLabel.isVisible = false;
+                removeFromFieldButton.isVisible = false;
             };
         }
         private void toRowUI()
@@ -213,6 +222,7 @@ namespace NetworkReplacer
                 {
                     finalRoadAdd.isVisible = false;
                     toRoadLabel.isVisible = true;
+                    removeToFieldButton.isVisible = true;
                     if (GameObject.FindObjectOfType<NetTool>().m_prefab == null)
                     {
                         toRoadLabel.textColor = new Color32(255, 0, 0, 255);
@@ -232,11 +242,13 @@ namespace NetworkReplacer
             removeToFieldButton.relativePosition = new Vector2(370, -5);
             removeToFieldButton.height = 25;
             removeToFieldButton.width = 80;
+            removeToFieldButton.isVisible = false;
 
             removeToFieldButton.eventClick += (c, p) =>
             {
                 finalRoadAdd.isVisible = true;
                 toRoadLabel.isVisible = false;
+                removeToFieldButton.isVisible = false;
             };
         }
     }

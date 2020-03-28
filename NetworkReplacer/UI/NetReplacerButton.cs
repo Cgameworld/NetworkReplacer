@@ -8,8 +8,7 @@ namespace NetworkReplacer.UI
 {
     public class NetReplacerButton : UIButton
     {
-
-        private const float BUTTON_HORIZONTAL_POSITION = 130;
+        private const float BUTTON_HORIZONTAL_POSITION = 128;
         const int SIZE = 31;
         const string NetReplacerButtonBg = "NetReplacerButtonBg";
         const string NetReplacerButtonBgPressed = "NetReplacerButtonBgPressed";
@@ -17,18 +16,15 @@ namespace NetworkReplacer.UI
         const string NetReplacerIcon = "NetReplacerIcon";
         const string NetReplacerIconPressed = "NetReplacerIconPressed";
 
-        bool clickClose = false;
-
         public override void Start()
         {
             name = "NetReplaceButton";
             playAudioEvents = true;
-            tooltip = "Network Replacer";
+            tooltip = "Bulk Network Replacer";
 
             var roadsOptionPanel = UIUtils.Instance.FindComponent<UIComponent>("RoadsOptionPanel", null, UIUtils.FindOptions.NameContains);
             var builtinTabstrip = UIUtils.Instance.FindComponent<UITabstrip>("ToolMode", roadsOptionPanel, UIUtils.FindOptions.None);
             UIButton uibutton = (UIButton)builtinTabstrip.tabs[0];
-
             string[] spriteNames = new string[]
             {
                 NetReplacerButtonBg,
@@ -66,17 +62,14 @@ namespace NetworkReplacer.UI
         protected override void OnClick(UIMouseEventParameter p)
         {
             base.OnClick(p);
-            
 
-            if (clickClose == false)
+            if (NetReplacePanel.instance.isVisible == false)
             {
                 NetReplacePanel.instance.Show();
-                clickClose = true;
             }
-            else if (clickClose == true)
+            else
             {
                 NetReplacePanel.instance.Hide();
-                clickClose = false;
             }
 
         }
