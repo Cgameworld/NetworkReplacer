@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
+using ColossalFramework.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,8 @@ namespace NetworkReplacer
                 segment.Info.m_netAI.ManualDeactivation(netSegmentId, ref segment);
                 NetManager.instance.ReleaseSegment(netSegmentId, false);
                 NetManager.instance.UpdateSegmentRenderer(netSegmentId, true);
+
+                ShowAlertWindow("Bulk Network Replacement Sucessful", "From: "+fromNetInfoSegmentName +"\nTo: " + toNetInfoSegmentName + "\nTotal Segments Replaced: " + netSegmentIds.Count + "\n\nNote: If networks are replaced near the map edge, use the vanilla upgrade tool on one of the segments for traffic to function again");
             }
         }
 
@@ -68,6 +71,18 @@ namespace NetworkReplacer
             }
             Debug.Log("Number of " + netInfoSegmentName + " : " + idCount);
             return result;
+        }
+
+        public static void ShowErrorWindow(string header, string message)
+        {
+            ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+            panel.SetMessage(header, message, false);
+            panel.GetComponentInChildren<UISprite>().spriteName = "IconError";
+        }
+        public static void ShowAlertWindow(string header, string message)
+        {
+            ExceptionPanel panel = UIView.library.ShowModal<ExceptionPanel>("ExceptionPanel");
+            panel.SetMessage(header, message, false);
         }
     }
 }

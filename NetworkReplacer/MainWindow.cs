@@ -26,6 +26,8 @@ namespace NetworkReplacer
         private UIButton clearAllButton;
         private UIButton swapFromToButton;
 
+        string NullRoadPhrase = "Select from vanilla roads panel!";
+
         public static NetReplacePanel instance
         {
             get
@@ -78,7 +80,25 @@ namespace NetworkReplacer
             {
                 if (isVisible)
                 {
-                    Tools.UpgradeNetSegments(fromRoadLabel.text,toRoadLabel.text);
+                    Debug.Log("from: " + fromRoadLabel.text + "\nto:" + toRoadLabel.text);
+                    if (fromRoadLabel.text == NullRoadPhrase || toRoadLabel.text == NullRoadPhrase)
+                    {
+                        Tools.ShowErrorWindow("Input Error", "Bulk Network Replacer:\n\n" + "The from and/or to field have no network(s) selected");
+                    }
+                    else if (fromRoadLabel.text == toRoadLabel.text)
+                    {
+                            Debug.Log("dups");
+                            Tools.ShowErrorWindow("Duplicate Networks", "Bulk Network Replacer:\n\n" + "The from and to fields have the same network selected");
+                    }
+                    else if (fromRoadLabel.text != NullRoadPhrase && toRoadLabel.text != NullRoadPhrase)
+                    {
+                            Tools.UpgradeNetSegments(fromRoadLabel.text, toRoadLabel.text);
+                    }
+
+                    else
+                    {
+                        Tools.ShowErrorWindow("Unknown Error", "Bulk Network Replacer:\n\n" + "Report the steps before clicking taken on the workshop page of this mod");
+                    }
                 }
             };
 
@@ -117,6 +137,9 @@ namespace NetworkReplacer
 
                     removeFromFieldButton.isVisible = false;
                     removeToFieldButton.isVisible = false;
+
+                    fromRoadLabel.text = NullRoadPhrase;
+                    toRoadLabel.text = NullRoadPhrase;
                 }
             };
 
@@ -141,6 +164,7 @@ namespace NetworkReplacer
             fromRoadLabel.textColor = new Color32(0, 255, 0, 255);
             fromRoadLabel.relativePosition = new Vector2(75, 0);
             fromRoadLabel.isVisible = false;
+            fromRoadLabel.text = NullRoadPhrase;
 
             initialRoadAdd = UIUtils.CreateButton(fromFieldRow);
             initialRoadAdd.text = "Add Selected Road";
@@ -162,7 +186,7 @@ namespace NetworkReplacer
                     if (GameObject.FindObjectOfType<NetTool>().m_prefab == null)
                     {
                         fromRoadLabel.textColor = new Color32(255, 0, 0, 255);
-                        fromRoadLabel.text = "Select from vanilla roads panel!";
+                        fromRoadLabel.text = NullRoadPhrase;
                     }
                     else
                     {
@@ -184,6 +208,7 @@ namespace NetworkReplacer
             {
                 initialRoadAdd.isVisible = true;
                 fromRoadLabel.isVisible = false;
+                fromRoadLabel.text = NullRoadPhrase;
                 removeFromFieldButton.isVisible = false;
             };
         }
@@ -204,7 +229,9 @@ namespace NetworkReplacer
             toRoadLabel.height = 30;
             toRoadLabel.textColor = new Color32(0, 255, 0, 255);
             toRoadLabel.relativePosition = new Vector2(75, 0);
+            toRoadLabel.text = NullRoadPhrase;
             toRoadLabel.isVisible = false;
+            
 
             finalRoadAdd = UIUtils.CreateButton(toFieldRow);
             finalRoadAdd.text = "Add Selected Road";
@@ -226,7 +253,7 @@ namespace NetworkReplacer
                     if (GameObject.FindObjectOfType<NetTool>().m_prefab == null)
                     {
                         toRoadLabel.textColor = new Color32(255, 0, 0, 255);
-                        toRoadLabel.text = "Select from vanilla roads panel!";
+                        toRoadLabel.text = NullRoadPhrase;
                     }
                     else
                     {
@@ -248,6 +275,7 @@ namespace NetworkReplacer
             {
                 finalRoadAdd.isVisible = true;
                 toRoadLabel.isVisible = false;
+                toRoadLabel.text = NullRoadPhrase;
                 removeToFieldButton.isVisible = false;
             };
         }
