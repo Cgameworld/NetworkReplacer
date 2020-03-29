@@ -14,6 +14,7 @@ namespace NetworkReplacer
 
         public static void UpgradeNetSegments(string fromNetInfoSegmentName, string toNetInfoSegmentName)
         {
+            SimulationManager.instance.SimulationPaused = true;
             //from Road Removal Tool by egi
             var replacementNetInfo = PrefabCollection<NetInfo>.FindLoaded(toNetInfoSegmentName);
             var netSegmentIds = GetNetSegmentIds(fromNetInfoSegmentName);
@@ -42,9 +43,9 @@ namespace NetworkReplacer
                 segment.Info.m_netAI.ManualDeactivation(netSegmentId, ref segment);
                 NetManager.instance.ReleaseSegment(netSegmentId, false);
                 NetManager.instance.UpdateSegmentRenderer(netSegmentId, true);
-
-                ShowAlertWindow("Bulk Network Replacement Sucessful", "From: "+fromNetInfoSegmentName +"\nTo: " + toNetInfoSegmentName + "\nTotal Segments Replaced: " + netSegmentIds.Count + "\n\nNote: If networks are replaced near the map edge, use the vanilla upgrade tool on one of the segments for traffic to function again");
             }
+
+            ShowAlertWindow("Bulk Network Replacement Sucessful", "From: " + fromNetInfoSegmentName + "\nTo: " + toNetInfoSegmentName + "\nTotal Segments Replaced: " + netSegmentIds.Count + "\n\nImportant: If networks are replaced near the map edge, use the vanilla upgrade tool on one of the replaced segments for traffic to function again");
         }
 
 
