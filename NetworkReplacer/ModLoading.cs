@@ -40,6 +40,9 @@ namespace NetworkReplacer
         //replace all 3L highway with 2L outisde of map more realistic!
         //replace all rails with railway
 
+        //to do network skins integration??
+        //add selection window and by tile option?
+
 
         
     }

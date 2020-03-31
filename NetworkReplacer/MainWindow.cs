@@ -27,6 +27,8 @@ namespace NetworkReplacer
         private UIButton swapFromToButton;
 
         string NullRoadPhrase = "Select from vanilla roads panel!";
+        public int segmentReplaceCount = 0;
+        private UIDropDown areaTypeDropdown;
 
         public static NetReplacePanel instance
         {
@@ -50,29 +52,46 @@ namespace NetworkReplacer
             isInteractive = true;
             clipChildren = true;
             width = 470;
-            height = 200;
-            relativePosition = new Vector3(25, 700);
+            height = 225;
+            relativePosition = new Vector3(25, 680);
 
             // Title Bar
             m_title = AddUIComponent<UITitleBar>();
             m_title.title = "Bulk Network Replacer";
             //m_title.isModal = true;
 
+            UILabel areaTypeLabel = AddUIComponent<UILabel>();
+            //"select from road panel"
+            areaTypeLabel.autoSize = false;
+            areaTypeLabel.width = 60;
+            areaTypeLabel.height = 30;
+            areaTypeLabel.relativePosition = new Vector2(20, 60);
+            areaTypeLabel.text = "Area:";
+
+            areaTypeDropdown = UIUtils.CreateDropDown(this);
+            areaTypeDropdown.width = 175;
+            areaTypeDropdown.AddItem("Entire Map");
+            areaTypeDropdown.AddItem("Selection");
+            areaTypeDropdown.selectedIndex = 0;
+            areaTypeDropdown.relativePosition = new Vector3(80, 55);
+
+
             fromFieldRow = AddUIComponent<UIPanel>();
-            fromFieldRow.relativePosition = new Vector2(0, 60);
+            fromFieldRow.relativePosition = new Vector2(0, 100);
             fromFieldRow.size = new Vector2(width, 0);
 
             fromRowUI();
 
             toFieldRow = AddUIComponent<UIPanel>();
-            toFieldRow.relativePosition = new Vector2(0, 100);
-            toFieldRow.size = new Vector2(width, 70);
+            toFieldRow.relativePosition = new Vector2(0, 140);
+            toFieldRow.size = new Vector2(width, 0);
 
             toRowUI();
 
+
             replaceRoad = UIUtils.CreateButton(this);
             replaceRoad.text = "Replace Network";
-            replaceRoad.relativePosition = new Vector2(20, 150);
+            replaceRoad.relativePosition = new Vector2(20, 180);
             replaceRoad.width = 200;
 
 
@@ -104,7 +123,7 @@ namespace NetworkReplacer
 
             swapFromToButton = UIUtils.CreateButton(this);
             swapFromToButton.text = "Swap";
-            swapFromToButton.relativePosition = new Vector2(230, 150);
+            swapFromToButton.relativePosition = new Vector2(230, 180);
             swapFromToButton.width = 90;
 
 
@@ -116,14 +135,13 @@ namespace NetworkReplacer
                     var totext = toRoadLabel.text;
                     fromRoadLabel.text = totext;
                     toRoadLabel.text = fromtext;
-                    
                 }
             };
 
 
             clearAllButton = UIUtils.CreateButton(this);
             clearAllButton.text = "Clear All";
-            clearAllButton.relativePosition = new Vector2(330, 150);
+            clearAllButton.relativePosition = new Vector2(330, 180);
             clearAllButton.width = 110;
 
             clearAllButton.eventClick += (c, p) =>
@@ -162,7 +180,7 @@ namespace NetworkReplacer
             fromRoadLabel.width = 300;
             fromRoadLabel.height = 30;
             fromRoadLabel.textColor = new Color32(0, 255, 0, 255);
-            fromRoadLabel.relativePosition = new Vector2(75, 0);
+            fromRoadLabel.relativePosition = new Vector2(83, 0);
             fromRoadLabel.isVisible = false;
             fromRoadLabel.text = NullRoadPhrase;
 
@@ -228,7 +246,7 @@ namespace NetworkReplacer
             toRoadLabel.width = 300;
             toRoadLabel.height = 30;
             toRoadLabel.textColor = new Color32(0, 255, 0, 255);
-            toRoadLabel.relativePosition = new Vector2(75, 0);
+            toRoadLabel.relativePosition = new Vector2(83, 0);
             toRoadLabel.text = NullRoadPhrase;
             toRoadLabel.isVisible = false;
             

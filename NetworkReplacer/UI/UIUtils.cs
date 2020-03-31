@@ -19,6 +19,7 @@ namespace NetworkReplacer
             button.atlas = GetAtlas("Ingame");
             button.size = new Vector2(90f, 30f);
             button.textScale = 0.9f;
+            button.verticalAlignment = UIVerticalAlignment.Middle;
             button.normalBgSprite = "ButtonMenu";
             button.hoveredBgSprite = "ButtonMenuHovered";
             button.pressedBgSprite = "ButtonMenuPressed";
@@ -96,9 +97,9 @@ namespace NetworkReplacer
             dropDown.popupColor = new Color32(45, 52, 61, 255);
             dropDown.popupTextColor = new Color32(170, 170, 170, 255);
             dropDown.zOrder = 1;
-            dropDown.textScale = 0.8f;
+            dropDown.textScale = 0.9f;
             dropDown.verticalAlignment = UIVerticalAlignment.Middle;
-            dropDown.horizontalAlignment = UIHorizontalAlignment.Left;
+            dropDown.horizontalAlignment = UIHorizontalAlignment.Center;
             dropDown.selectedIndex = 0;
             dropDown.textFieldPadding = new RectOffset(8, 0, 8, 0);
             dropDown.itemPadding = new RectOffset(14, 0, 8, 0);
@@ -110,7 +111,7 @@ namespace NetworkReplacer
             button.size = dropDown.size;
             button.relativePosition = new Vector3(0f, 0f);
             button.textVerticalAlignment = UIVerticalAlignment.Middle;
-            button.textHorizontalAlignment = UIHorizontalAlignment.Left;
+            button.textHorizontalAlignment = UIHorizontalAlignment.Center;
             button.normalFgSprite = "IconDownArrow";
             button.hoveredFgSprite = "IconDownArrowHovered";
             button.pressedFgSprite = "IconDownArrowPressed";
@@ -120,7 +121,8 @@ namespace NetworkReplacer
             button.horizontalAlignment = UIHorizontalAlignment.Right;
             button.verticalAlignment = UIVerticalAlignment.Middle;
             button.zOrder = 0;
-            button.textScale = 0.8f;
+            button.textScale = 0.9f;
+            button.textHorizontalAlignment = UIHorizontalAlignment.Center;
 
             dropDown.eventSizeChanged += new PropertyChangedEventHandler<Vector2>((c, t) =>
             {

@@ -15,6 +15,38 @@ namespace NetworkReplacer
         public static void UpgradeNetSegments(string fromNetInfoSegmentName, string toNetInfoSegmentName)
         {
             SimulationManager.instance.SimulationPaused = true;
+            UpgradeSegmentElevation(fromNetInfoSegmentName, toNetInfoSegmentName); //ground elevation
+            for (int i = 1; i < 5; i++) //loop through other elevations
+            { 
+                UpgradeSegmentElevation(GetElevationName(fromNetInfoSegmentName, i), GetElevationName(toNetInfoSegmentName, i));
+            }
+
+
+            ShowAlertWindow("Bulk Network Replacement Sucessful", "From: " + fromNetInfoSegmentName + "\nTo: " + toNetInfoSegmentName + "\nTotal Segments Replaced: " + NetReplacePanel.instance.segmentReplaceCount + "\n\nImportant: If networks are replaced near the map edge, use the vanilla upgrade tool on one of the replaced segments for traffic to function again");
+            NetReplacePanel.instance.segmentReplaceCount = 0;
+
+        }
+
+        private static string GetElevationName(string rawNetInfo, int elevationType)
+        {
+            switch (elevationType)
+            {
+                case 1:
+                    return AssetEditorRoadUtils.TryGetElevated(PrefabCollection<NetInfo>.FindLoaded(rawNetInfo)).name;
+                case 2:
+                    return AssetEditorRoadUtils.TryGetBridge(PrefabCollection<NetInfo>.FindLoaded(rawNetInfo)).name;
+                case 3:
+                    return AssetEditorRoadUtils.TryGetSlope(PrefabCollection<NetInfo>.FindLoaded(rawNetInfo)).name;
+                case 4:
+                    return AssetEditorRoadUtils.TryGetTunnel(PrefabCollection<NetInfo>.FindLoaded(rawNetInfo)).name;
+                default:
+                    return "";// make it return error maybe?
+            }
+
+        }
+
+        private static void UpgradeSegmentElevation(string fromNetInfoSegmentName, string toNetInfoSegmentName)
+        {
             //from Road Removal Tool by egi
             var replacementNetInfo = PrefabCollection<NetInfo>.FindLoaded(toNetInfoSegmentName);
             var netSegmentIds = GetNetSegmentIds(fromNetInfoSegmentName);
@@ -45,9 +77,8 @@ namespace NetworkReplacer
                 NetManager.instance.UpdateSegmentRenderer(netSegmentId, true);
             }
 
-            ShowAlertWindow("Bulk Network Replacement Sucessful", "From: " + fromNetInfoSegmentName + "\nTo: " + toNetInfoSegmentName + "\nTotal Segments Replaced: " + netSegmentIds.Count + "\n\nImportant: If networks are replaced near the map edge, use the vanilla upgrade tool on one of the replaced segments for traffic to function again");
+            NetReplacePanel.instance.segmentReplaceCount += netSegmentIds.Count;
         }
-
 
         public static List<ushort> GetNetSegmentIds(string netInfoSegmentName)
         {
